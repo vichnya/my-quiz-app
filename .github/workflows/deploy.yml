@@ -1,0 +1,42 @@
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-docker@v2
+
+    - name: Build Quiz App
+      run: ./build.sh
+      working-directory: ././  # Замените путь на фактический путь к вашему проекту
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker Image
+      run: docker push my-nginx:latest  # Замените на ваше имя образа и тег
+      working-directory: ././  # Замените путь на фактический путь к вашему проекту
+
+    - name: Deploy to Remote Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_ADDRESS }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 80
+        script: |
+          docker-compose -f ././docker-compose.yml pull
+          docker-compose -f ././docker-compose.yml up -d
