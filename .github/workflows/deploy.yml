@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/my-nginx
+      run: docker push vishnya1chern/my-nginx
       working-directory: ././  
 
     - name: Deploy to Remote Server
