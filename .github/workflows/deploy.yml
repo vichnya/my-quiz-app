@@ -18,7 +18,7 @@ jobs:
 
     - name: Build Quiz App
       run: ./build.sh
-      working-directory: ././  # Замените путь на фактический путь к вашему проекту
+      working-directory: ././  
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
@@ -27,8 +27,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push Docker Image
-      run: docker push my-nginx:latest  # Замените на ваше имя образа и тег
-      working-directory: ././  # Замените путь на фактический путь к вашему проекту
+      run: docker push my-nginx:latest  
+      working-directory: ././  
 
     - name: Deploy to Remote Server
       uses: appleboy/ssh-action@master
