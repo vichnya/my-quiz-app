@@ -33,7 +33,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Tag Docker Image
-      run: docker tag my-nginx:latest vishnya1chern/my-nginx:latest
+      run: docker tag my-nginx:latest ${{ secrets.DOCKER_USERNAME }}/my-nginx:latest
       working-directory: ././  
       
     - name: Push Docker Image
