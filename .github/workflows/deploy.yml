@@ -49,5 +49,5 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 80
         script: |
-          ssh -o StrictHostKeyChecking=no user@host 'docker-compose -f ././docker-compose.yml pull'
-          ssh -o StrictHostKeyChecking=no user@host 'docker-compose -f ././docker-compose.yml up -d'
+          docker-compose -f ././docker-compose.yml pull  
+          docker-compose -f ././docker-compose.yml up -d
