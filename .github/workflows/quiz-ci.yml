@@ -18,9 +18,9 @@ jobs:
         docker-compose build
         docker-compose up -d
         docker-compose ps
-      working-directory: C:\Soft\PyCharm\my-quiz-app
+      working-directory: ./
 
 
     - name: Stop Docker container
       run: docker-compose down
-      working-directory: C:\Soft\PyCharm\my-quiz-app
+      working-directory: ./
