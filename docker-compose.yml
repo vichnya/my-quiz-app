@@ -1,0 +1,8 @@
+version: '3'
+services:
+  quiz-app:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./quiz:/usr/share/nginx/html
