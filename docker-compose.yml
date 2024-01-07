@@ -1,7 +1,7 @@
 version: '3'
 services:
   quiz-app:
-    image: nginx:latest
+    image: my-nginx:latest
     ports:
       - "8080:80"
     volumes:
