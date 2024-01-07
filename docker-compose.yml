@@ -3,6 +3,6 @@ services:
   quiz-app:
     image: my-nginx:latest
     ports:
-      - "80"
+      - "8080:80"
     volumes:
       - ./quiz:/usr/share/nginx/html
