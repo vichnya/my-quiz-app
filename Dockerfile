@@ -8,6 +8,3 @@ COPY quiz /usr/share/nginx/html
 RUN chmod -R 755 /usr/share/nginx/html
 
 ENTRYPOINT nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
-
-# Опционально: прокиньте порты, если это необходимо
-EXPOSE 80
