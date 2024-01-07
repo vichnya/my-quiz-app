@@ -33,7 +33,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/my-nginx:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/my-nginx
       working-directory: ././  
 
     - name: Deploy to Remote Server
