@@ -7,4 +7,7 @@ COPY quiz /usr/share/nginx/html
 # Этот шаг необходим для Nginx, чтобы правильно обслуживать статические файлы
 RUN chmod -R 755 /usr/share/nginx/html
 
+# Опционально: прокиньте порты, если это необходимо
+EXPOSE 80
+
 ENTRYPOINT nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
