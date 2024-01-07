@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: my-quiz-app
+      uses: actions/my-quiz-app
+
+    - name: Build and run Docker container
+      run: |
+        docker-compose build
+        docker-compose up -d
+        docker-compose ps
+      working-directory: ./path/to/your/project
+
+    - name: Stop Docker container
+      run: docker-compose down
+      working-directory: ./path/to/your/project
