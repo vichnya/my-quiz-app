@@ -45,7 +45,7 @@ jobs:
            options: ''
            ssh_options: ''
            src: '.'
-           dest: 'root@"${{vars.SERVER_HOST}}":/var/www/html'
+           dest: 'root@"${{vars.SERVER_HOST}}":/usr/share/nginx/html'
  
       - name: Display status from deploy
         run: echo "${{ steps.deploy.outputs.status }}"
