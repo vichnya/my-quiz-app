@@ -48,5 +48,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_key }}
           script_stop: true
           script: bash ././deploy.sh
