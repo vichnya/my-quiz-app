@@ -35,24 +35,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
  
-      - name: Push pages on server
-        uses: Pendect/action-rsyncer@v2.0.0
-        env:
-            DEPLOY_KEY: ${{secrets.SSH_KEY}}
+      - name: Connect and run script
+        uses: appleboy/ssh-action@master
         with:
-            flags: '-avc --delete'
-            options: ''
-            ssh_options: ''
-            src: '././quiz'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/usr/share/nginx/html'
-
-      - name: Push build on server
-        uses: Pendect/action-rsyncer@v2.0.0
-        env:
-            DEPLOY_KEY: ${{secrets.SSH_KEY}}
-        with:
-            flags: '-avc --delete'
-            options: ''
-            ssh_options: ''
-            src: '.'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/build'
+          host: ${{ secrets.SERVER_HOST }}
+          port: 22
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.PASSWORD }}
+          script_stop: true
+          script: bash deploy.sh
