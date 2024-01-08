@@ -49,4 +49,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script_stop: true
-          script: bash deploy.sh
+          script: bash ././deploy.sh
