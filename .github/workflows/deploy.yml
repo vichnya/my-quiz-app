@@ -34,7 +34,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      
+
+  server_update:
+    needs: push_to_registry
+    name: Push on server
+    runs-on: ubuntu-latest
+    steps:
       - name: Push pages on server
         uses: Pendect/action-rsyncer@v2.0.0
         env:
@@ -56,7 +61,12 @@ jobs:
             ssh_options: ''
             src: '.'
             dest: 'root@"${{secrets.SERVER_HOST}}":/build'
- 
+
+  server_deploy:
+    needs: server_update
+    name: Deploy on server
+    runs-on: ubuntu-latest
+    steps:
       - name: Connect and run script
         uses: appleboy/ssh-action@master
         with:
