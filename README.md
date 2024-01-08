@@ -17,7 +17,7 @@
 * [ Установка Docker в Windows](https://devhops.ru/dvps/docker/install/windows/)
 * [ WSL для Docker в Windows](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-Скачайте репозиторий с GitHub. Разархивируйте проект. 
+Скачайте репозиторий с GitHub. Разархивируйте проект.   
 В командной строке перейдите в директорию с проектом. Соберите проект и локально запустите проект.
 ```
 docker build -t {name_image}:latest . 
