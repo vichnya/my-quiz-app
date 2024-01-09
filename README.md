@@ -161,7 +161,7 @@ nano authorized_keys
 * NAME_PS : Название контейнера, работающего на удаленном сервере (Создан на шаге 1.6 при запуске Docker контейнера на удаленном сервере)
 
 Как должна выглядеть страница после добавления ключей
-![foto1](https://github.com/vichnya/Dec_praktika_2023/blob/main/3.2/foto1.png)
+![foto1](https://github.com/vichnya/Dec_praktika_2023/blob/main/3.2/foto1(1).png)
 
 Перейдите во вкладку Actions. Там вам будет предложено создать стартовый simpe workflow.
 ![foto2](https://github.com/vichnya/Dec_praktika_2023/blob/main/3.2/foto2.png)
