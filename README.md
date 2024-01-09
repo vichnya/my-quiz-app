@@ -222,7 +222,7 @@ jobs:
             options: ''
             ssh_options: ''
             src: '././quiz'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/usr/share/nginx/html'
+            dest: 'root@"${{secrets.SERVER_HOST}}":/usr/share/nginx/html' # Путь к nginx/html на вашем сервере
 
       - name: Push build on server
         uses: Pendect/action-rsyncer@v2.0.0
@@ -233,7 +233,7 @@ jobs:
             options: ''
             ssh_options: ''
             src: '.'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/build'
+            dest: 'root@"${{secrets.SERVER_HOST}}":/build' # Путь к папке build, созданной на шаге 2.2
 
       - name: Connect and run script
         uses: appleboy/ssh-action@master
@@ -244,7 +244,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           password: ${{ secrets.PASSWORD }}
           script_stop: true
-          script: sh ../build/build.sh
+          script: sh ../build/build.sh # Путь к файлу build.sh, в папке build, созданной на шаге 2.2
 ```
 Перейдите в раздел Actions, чтобы следить за деплоем. 
 
