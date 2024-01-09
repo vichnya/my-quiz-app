@@ -161,7 +161,7 @@ mkdir build
 * DOCKER_PASSWORD : пароль от DockerHub
 * DOCKER_REPO_NAME: название репозитория в DockerHub
 * SERVER_HOST : IP удаленного сервера (можно в виде 0.0.0.0)
-* SSH_KEY : Приватный ключ, созданный на предыдущем пункте
+* SSH_KEY : Приватный ключ, созданный в пункте 2.1
 * USERNAME : root 
 * PASSWORD : Пароль для подключения к удаленному серверу
 
