@@ -40,6 +40,37 @@ docker run -p 80:80 --name glav my-nginx:latest
 
 #### 3. Отправка файлов в Docker Hub
 
+Перед отправкой файлов нужно отредактировать файл build.sh
+```
+# {DockerHub_login}/{DockerHub_Repo}:latest - логин в DockerHub/название репозитория в DockerHub
+
+#!/bin/bash
+
+echo "Stop container"
+docker stop glav
+docker rm glav
+docker image rm {DockerHub_login}/{DockerHub_Repo} #!
+echo "Pull image"
+docker pull {DockerHub_login}/{DockerHub_Repo} #!
+echo "Start frontend container"
+docker run -p 80:80 --name glav -d {DockerHub_login}/{DockerHub_Repo} #! 
+echo "Finish deploying!"
+```
+В нашем случае
+```
+#!/bin/bash
+
+echo "Stop container"
+docker stop glav
+docker rm glav
+docker image rm vishnya1chern/my-nginx 
+echo "Pull image"
+docker pull vishnya1chern/my-nginx 
+echo "Start frontend container"
+docker run -p 80:80 --name glav -d vishnya1chern/my-nginx 
+echo "Finish deploying!"
+```
+
 Чтобы отправить наш образ в Docker Hub нужно воспользоваться командой push.
 ```
 docker login
