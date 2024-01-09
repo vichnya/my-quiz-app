@@ -27,7 +27,7 @@ docker build -t {name_image}:latest .
 
 docker run -p 80:80 --name {name_ps}  {name_image}:latest 
 # -p - порт на котором будет запущен создаваемый контейнер;
-# --name - название создаваемого контейнера.
+# name_ps - название создаваемого контейнера.
 ```
 В нашем случае
 ```
@@ -39,38 +39,6 @@ docker run -p 80:80 --name glav my-nginx:latest
 Нужно создать репозиторий на [Docker Hub](https://hub.docker.com/). Для этого зарегистрируйтесь на сервисе или, при наличии аккаунта, - авторизируйтесь. В вкладке репозиторий создайте новый репозиторий. В дальнейшем нам понадобится логин, пароль и название созданного репозитория.
 
 #### 3. Отправка файлов в Docker Hub
-
-Перед отправкой файлов нужно отредактировать файл build.sh
-```
-# {DockerHub_login}/{DockerHub_Repo} - логин в DockerHub/название репозитория в DockerHub, по совместительству название образа
-# {name_ps} - название созданного контейнера
-
-#!/bin/bash
-
-echo "Stop container"
-docker stop {name_ps}
-docker rm {name_ps}
-docker image rm {DockerHub_login}/{DockerHub_Repo} #!
-echo "Pull image"
-docker pull {DockerHub_login}/{DockerHub_Repo} #!
-echo "Start frontend container"
-docker run -p 80:80 --name glav -d {DockerHub_login}/{DockerHub_Repo} #! 
-echo "Finish deploying!"
-```
-В нашем случае
-```
-#!/bin/bash
-
-echo "Stop container"
-docker stop glav
-docker rm glav
-docker image rm vishnya1chern/my-nginx 
-echo "Pull image"
-docker pull vishnya1chern/my-nginx 
-echo "Start frontend container"
-docker run -p 80:80 --name glav -d vishnya1chern/my-nginx 
-echo "Finish deploying!"
-```
 
 Чтобы отправить наш образ в Docker Hub нужно воспользоваться командой push.
 ```
@@ -196,6 +164,7 @@ mkdir build
 * SSH_KEY : Приватный ключ, созданный в пункте 2.1
 * USERNAME : root 
 * PASSWORD : Пароль для подключения к удаленному серверу
+* NAME_PS : Название контейнера, работающего на удаленном сервере (Создан на шаге 1.6 при запуске Docker контейнера на удаленном сервере)
 
 Как должна выглядеть страница после добавления ключей
 ![foto1](https://github.com/vichnya/Dec_praktika_2023/blob/main/3.2/foto1.png)
@@ -245,28 +214,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Push pages on server
-        uses: Pendect/action-rsyncer@v2.0.0
-        env:
-            DEPLOY_KEY: ${{secrets.SSH_KEY}}
-        with:
-            flags: '-avc --delete'
-            options: ''
-            ssh_options: ''
-            src: '././quiz'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/usr/share/nginx/html' # Путь к nginx/html на вашем сервере
-
-      - name: Push build on server
-        uses: Pendect/action-rsyncer@v2.0.0
-        env:
-            DEPLOY_KEY: ${{secrets.SSH_KEY}}
-        with:
-            flags: '-avc --delete'
-            options: ''
-            ssh_options: ''
-            src: '.'
-            dest: 'root@"${{secrets.SERVER_HOST}}":/build' # Путь к папке build, созданной на шаге 2.2
-
       - name: Connect and run script
         uses: appleboy/ssh-action@master
         with:
@@ -276,7 +223,16 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           password: ${{ secrets.PASSWORD }}
           script_stop: true
-          script: sh ../build/build.sh # Путь к файлу build.sh, в папке build, созданной на шаге 2.2
+          script: |
+            echo "Stop container"
+            docker stop ${{ secrets.NAME_PS }}
+            docker rm ${{ secrets.NAME_PS }}
+            docker image rm ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+            echo "Pull image"
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+            echo "Start frontend container"
+            docker run -p 80:80 --name ${{ secrets.NAME_PS }} -d ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+            echo "Finish deploying!"
 ```
 Перейдите в раздел Actions, чтобы следить за деплоем. 
 
