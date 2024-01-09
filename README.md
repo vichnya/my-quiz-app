@@ -42,7 +42,7 @@ docker run -p 80:80 --name glav my-nginx:latest
 
 Перед отправкой файлов нужно отредактировать файл build.sh
 ```
-# {DockerHub_login}/{DockerHub_Repo}:latest - логин в DockerHub/название репозитория в DockerHub
+# {DockerHub_login}/{DockerHub_Repo} - логин в DockerHub/название репозитория в DockerHub
 
 #!/bin/bash
 
